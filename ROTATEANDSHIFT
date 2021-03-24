@@ -1,0 +1,55 @@
+program test_1
+real, dimension(6) :: p, q
+integer :: i
+open(2,file = 'shifted.dat')
+! opening the file for reading
+open (3, file = 'input.dat')
+do i = 1,1 ! NO. OF ATOMIC POSITION
+read(3,*) p(i), q(i)
+end do
+close(3)
+print*,"ENTER COORDINATES TO SHIFT"
+read*,e,f
+!print*,"ENTER COORDINATES TO"
+!read*,a,b
+!x=e-a
+!y=f-b
+do i = 1,1
+u=p(i)+ e !x
+v=q(i)+ f !y
+write(2,*)u,v
+end do 
+open(4,file = 'rotated_shifted.dat')
+! opening the file for reading
+open (1, file = 'shifted.dat')
+do i = 1,1
+read(1,*) p(i), q(i)
+end do
+close(3)
+print*,"ENTER ANGLE IN DEGREE"
+read*,thetad
+print*,"ENTER COORDINATES OF AXIS OF ROTATION"
+read*,a,b
+print*,"FOR CLOCKWISE ENTER 1 & ANTI-CLOCKWISE ENTER 0"
+read*,R
+theta=thetad*3.14/180
+do i = 1,1
+x=p(i)-a
+y=q(i)-b
+if (R==1) then
+u=(x*cos(theta)+y*sin(theta))+a
+v=(-x*sin(theta)+y*cos(theta))+b
+write(4,*)u,v
+else
+u=(x*cos(theta)-y*sin(theta))+a
+v=(x*sin(theta)+y*cos(theta))+b
+write(4,*)u,v
+end if
+! WE CAN RUN OUR CALCULATION HERE 
+! AND THE OUTPUT WE ALREADY GET IS READ   
+! OUT IN FILE IN FREE FORMAT WHICH CAN BE USE HERE IN TEST_1 PROGRAM   
+! WE HAVE TO USE THIS DATA THERE (FREE FORMAT) SO OUR PROBLEM TO 
+! READ DATA IN SPECIFIC FORM IS ALSO SOLVED
+! HERE DIMENSION (8) CAN BE VARIED ACCORDING TO OUR DATA SET SIZE
+end do
+end program test_1
